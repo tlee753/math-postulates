@@ -1,0 +1,10 @@
+PI Calculation
+==========
+Denominator up to 1,000,000
+
+Ratio was 3.12654e+06/995207
+Calcuated ratio of 3.14159
+Actual value of PI 3.14159
+==========
+
+
