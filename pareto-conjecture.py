@@ -16,3 +16,8 @@ def pareto(n):
     print("Total: %f" % total)
 
 pareto(sys.argv[1])
+
+
+### Notes
+# anything between ~400 and 30000 is within 5% of the 80-20 rule
+# anything between ~120 and 10000000 is within 10% of the 80-20 rule
