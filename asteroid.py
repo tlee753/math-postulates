@@ -36,11 +36,22 @@ for i in range(asteroidAmount):
 
     c += 1
     v = c # cluster identifier
+    
+    impacterView = [x, y, r, v]
 
     for impact in impacts:
-        if sqrt((x - impact[0])**2 + (y - impact[1])**2) <= (r + impact[2]):
-            v = min(v, impact[3])
-            impact[3] = min(v, impact[3])
+        ival1 = sqrt((x - impact[0])**2 + (y - impact[1])**2)
+        ival2 = float(r + impact[2])
+        if ival1 <= ival2:
+            if impact[3] < v:
+                for i in range(len(impacts)):
+                    if impacts[i][3] == v:
+                        impacts[i][3] = impact[3]      # fix these three lines    
+            if v < impact[3]:
+                for i in range(len(impacts)):
+                    if impacts[i][3] == impact[3]:
+                        impacts[i][3] = v
+            
 
     impacts.append( [x, y, r, v] )
 
@@ -53,7 +64,6 @@ ax = plt.gca()
 colors = ["pink", "red", "orange", "yellow", "green", "cyan", "blue", "purple", "gray", "brown", "black"]
 
 for impact in impacts:
-
     circle = plt.Circle((impact[0], impact[1]), color=colors[impact[3]%len(colors)], radius=impact[2])
     ax.add_patch(circle)
 
