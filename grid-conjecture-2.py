@@ -45,7 +45,7 @@ from random import randint
 
 maxX = 100
 maxY = 100
-iterations = 10000
+iterations = 1000
 
 connections = []
 
@@ -63,9 +63,8 @@ for _ in range(iterations):
     if not intersectBool:
         connections += [[p1, q1]]
     
-print("Total Connections: ", len(connections))
+print(len(connections))
 
-import numpy as np
 import pylab as pl
 from matplotlib import collections as mc
 
@@ -75,21 +74,12 @@ lc = mc.LineCollection(connections, linewidths=2)
 fig, ax = pl.subplots()
 ax.add_collection(lc)
 ax.autoscale()
-ax.margins(0.05)
 
-# pl.show()
-
+pl.show()
 
 
-import math
+"""
+connect two random points
+biological limit?
 
-lengths = []
-
-for connection in connections:
-    lengths.append( math.sqrt( (connection[0][0] - connection[1][0])**2 + (connection[0][1] - connection[1][1])**2 ) )
-
-lengths.sort(reverse=True)
-val = min(50, len(lengths))
-
-for i in range(val):
-    print(lengths[i])
+"""
