@@ -13,7 +13,7 @@ import numpy as np
 
 
 mapRange = 20
-asteroidSize = 2
+asteroidSize = 3
 asteroidAmount = int(mapRange**2/asteroidSize**2)
 # print(asteroidAmount)
 # ^ some function that will give me the same global coverage area based on scale factor between upper two params
@@ -39,18 +39,26 @@ for i in range(asteroidAmount):
     
     impacterView = [x, y, r, v]
 
-    for impact in impacts:
-        ival1 = sqrt((x - impact[0])**2 + (y - impact[1])**2)
-        ival2 = float(r + impact[2])
-        if ival1 <= ival2:
-            if impact[3] < v:
-                for i in range(len(impacts)):
-                    if impacts[i][3] == v:
-                        impacts[i][3] = impact[3]      # fix these three lines    
-            if v < impact[3]:
-                for i in range(len(impacts)):
-                    if impacts[i][3] == impact[3]:
-                        impacts[i][3] = v
+    properlyAdded = False
+    while not properlyAdded:
+
+        properlyAdded = True
+
+        for i in range(len(impacts)):
+            ival1 = sqrt((x - impacts[i][0])**2 + (y - impacts[i][1])**2)
+            ival2 = float(r + impacts[i][2])
+            if ival1 <= ival2:
+                if impacts[i][3] < v:
+                    v = impacts[i][3]
+                    properlyAdded = False
+                elif v < impacts[i][3]:
+                    for j in range(len(impacts)):
+                        if impacts[j][3] == impacts[i][3]:
+                            impacts[j][3] = v
+                    properlyAdded = False
+
+        impacts.sort(key = lambda x:x[3])
+        # print(impacts)
             
 
     impacts.append( [x, y, r, v] )
@@ -59,14 +67,26 @@ for i in range(asteroidAmount):
 
 import matplotlib.pyplot as plt
 
-plt.figure(figsize=(15,10))
+plt.figure(figsize=(15,10), facecolor="black")
 ax = plt.gca()
-colors = ["pink", "red", "orange", "yellow", "green", "cyan", "blue", "purple", "gray", "brown", "black"]
+
+ax.spines['bottom'].set_color('white')
+ax.spines['top'].set_color('white') 
+ax.spines['right'].set_color('white')
+ax.spines['left'].set_color('white')
+ax.tick_params(axis='x', colors='white')
+ax.tick_params(axis='y', colors='white')
+ax.yaxis.label.set_color('white')
+ax.xaxis.label.set_color('white')
+ax.title.set_color('white')
+ax.set_facecolor('xkcd:black')
+colors = ["magenta", "red", "orange", "goldenrod", "green", "violet", "blue", "purple", "gray", "brown", "teal"]
 
 for impact in impacts:
     circle = plt.Circle((impact[0], impact[1]), color=colors[impact[3]%len(colors)], radius=impact[2])
     ax.add_patch(circle)
-
+    ax.text(impact[0], impact[1], impact[3], color="white")
+    
 plt.axis('scaled')
 plt.show()
 
