@@ -37,8 +37,8 @@ for _ in range(2):
 
 deltaT = 50
 t = 0
-while t < 100000:
-    rate(20)
+while t < 1000000:
+    rate(2000)
 
     for d1 in debree:
         for d2 in debree:
@@ -61,3 +61,4 @@ while t < 100000:
 #    break
 
 print("fin")
+
