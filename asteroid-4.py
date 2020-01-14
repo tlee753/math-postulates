@@ -3,7 +3,7 @@ from math import sqrt
 import numpy as np
 
 
-mapRange = 300
+mapRange = 200
 asteroidSize = int(sqrt(mapRange))
 asteroidAmount = int(mapRange**2/asteroidSize**2)
 
